@@ -31,10 +31,10 @@ class RecipeDataProvider{
     print(response.statusCode);
     print("heeeeeeeeeeeeeeeeeeeeeeeeeeeee");
     if (response.statusCode == 200) {
-       await getRecipe(1 );
+      // await getRecipe(1 );
       final recipes = jsonDecode(response.body) as List;
       return recipes.map((recipe) {
-        
+
        return Recipe.fromJson(recipe);
       }).toList();
      
@@ -44,21 +44,21 @@ class RecipeDataProvider{
 
   }
 
- Future<void> getRecipe(int id)async{
-    final response = await httpClient.get('$_baseUrl/recipe/image/$id');
-    print('satus coooooooooooooooooooooooooooooooooooooooooooooooooooo');
-    print(response.statusCode);
-    if (response.statusCode == 200) {
+//  Future<void> getRecipe(int id)async{
+//     final response = await httpClient.get('$_baseUrl/recipe/image/$id');
+//     print('satus coooooooooooooooooooooooooooooooooooooooooooooooooooo');
+//     print(response.statusCode);
+//     if (response.statusCode == 200) {
       
         
-      // return Recipe.fromJson(jsonDecode(response.body));
+//       // return Recipe.fromJson(jsonDecode(response.body));
      
       
-    } else {
-      throw Exception('Failed');
-    }
+//     } else {
+//       throw Exception('Failed');
+//     }
 
-  }
+//   }
 
 
 
@@ -96,7 +96,7 @@ class RecipeDataProvider{
 
   
   Future<Recipe> createRecipe(Recipe recipe) async {  
-    print("my file"+recipe.image.toString());
+   // print("my file"+recipe.image.toString());
     final response = await httpClient.post(
 
       Uri.http('192.168.1.6:8181', '/recipes/new'),
@@ -141,25 +141,25 @@ class RecipeDataProvider{
     
   }
 
-  Future<void> UploadImageRecipe(int recipeId,File file) async {  
-    Dio dio= Dio();
-    print("pleeeeeeeeeeeeeeeeeeeeeeee");
-    print(recipeId);
-    print("sure");
-        print("file "+file.toString());
-      String fileName = file.path.split('/').last;
-     // print("file "+file.toString());
-    FormData formData = FormData.fromMap({
-        "file":
-            await MultipartFile.fromFile(file.path, filename:fileName),
-    });
-    dio.options.headers["id"] = recipeId;
+  // Future<void> UploadImageRecipe(int recipeId,File file) async {  
+  //   Dio dio= Dio();
+  //   print("pleeeeeeeeeeeeeeeeeeeeeeee");
+  //   print(recipeId);
+  //   print("sure");
+  //       print("file "+file.toString());
+  //     String fileName = file.path.split('/').last;
+  //    // print("file "+file.toString());
+  //   FormData formData = FormData.fromMap({
+  //       "file":
+  //           await MultipartFile.fromFile(file.path, filename:fileName),
+  //   });
+  //   dio.options.headers["id"] = recipeId;
     
-    var response = await dio.post("http://192.168.1.6:8181/recipes/newImage/${recipeId}", data: formData,queryParameters:{"id":recipeId});
-    print("rsponnnnnnnnnnnnnnnnnn");
+  //   var response = await dio.post("http://192.168.1.6:8181/recipes/newImage/${recipeId}", data: formData,queryParameters:{"id":recipeId});
+  //   print("rsponnnnnnnnnnnnnnnnnn");
     
 
-  }
+  // }
 
 Future<void> updateRecipe(Recipe recipe) async {
   print("recpe id ${recipe.id}");

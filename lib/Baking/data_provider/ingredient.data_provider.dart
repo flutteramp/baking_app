@@ -13,7 +13,7 @@ class IngredientDataProvider{
 
   Future<List<Ingredient>> getingredients(int rid) async{
      print(rid);
-    final response = await httpClient.get('$_baseUrl/ingredients/$rid');
+    final response = await httpClient.get('$_baseUrl/recipes/$rid/ingredients');
     print('getttinggg commmeeentnnntsssss');
     if (response.statusCode == 200) {
       final ingredients = jsonDecode(response.body) as List;

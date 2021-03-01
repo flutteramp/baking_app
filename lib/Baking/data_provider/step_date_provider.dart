@@ -15,7 +15,7 @@ class StepDataProvider{
 
   Future<List<RecipeStep>> getSteps(int rid) async{
      print(rid);
-    final response = await httpClient.get('$_baseUrl/steps/$rid');
+    final response = await httpClient.get('$_baseUrl/recipes/$rid/steps');
     print('getttinggg stepppppppppps');
     if (response.statusCode == 200) {
       final steps = jsonDecode(response.body) as List;

@@ -28,7 +28,7 @@ Future<List<Recipe>> getRecipes() async {print('getttttttttttttttttttttt');
     await dataProvider.deleteRecipe(id);
   }
  Future<void> getRecipe(int id)async{
-     await dataProvider.getRecipe(id);
+     //await dataProvider.getRecipe(id);
   }
  
   
