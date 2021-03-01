@@ -5,15 +5,17 @@ import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../constants.dart';
+
 class IngredientDataProvider{
-  final _baseUrl = 'http://192.168.1.6:8181';
+ // final _baseUrl = 'http://192.168.1.6:8181';
   final http.Client httpClient;
 
   IngredientDataProvider({@required this.httpClient}) : assert(httpClient != null);
 
   Future<List<Ingredient>> getingredients(int rid) async{
      print(rid);
-    final response = await httpClient.get('$_baseUrl/recipes/$rid/ingredients');
+    final response = await httpClient.get('$baseUrl/recipes/$rid/ingredients');
     print('getttinggg commmeeentnnntsssss');
     if (response.statusCode == 200) {
       final ingredients = jsonDecode(response.body) as List;

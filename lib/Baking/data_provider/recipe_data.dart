@@ -8,18 +8,17 @@ import 'package:http/http.dart' as http;
 
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../constants.dart';
 import '../shared_preferences.dart';
 
 class RecipeDataProvider{
-  final _baseUrl = 'http://192.168.1.6:8181';
   final http.Client httpClient;
   RecipeDataProvider({@required this.httpClient}) : assert(httpClient != null);
 
 
   Future<List<Recipe>> getRecipes()async{
 
-    final response = await httpClient.get('$_baseUrl/recipes',
+    final response = await httpClient.get('$baseUrl/recipes',
      headers: await SharedPrefUtils.getStringValuesSF().then((token){
          print(token);
     return (<String, String>{
@@ -63,7 +62,7 @@ class RecipeDataProvider{
 
 
     Future<List<Recipe>> getUserRecipes(int id)async{
-    final response = await httpClient.get('$_baseUrl/user/$id/recipes');
+    final response = await httpClient.get('$baseUrl/user/$id/recipes');
     print('satus coooooooooooooooooooooooooooooooooooooooooooooooooooo');
     print(response.statusCode);
     if (response.statusCode == 200) {
@@ -81,7 +80,7 @@ class RecipeDataProvider{
   }
       Future<void> deleteRecipe(int id) async {
     final http.Response response = await httpClient.delete(
-      '$_baseUrl/recipes/delete/$id',
+      '$baseUrl/recipes/delete/$id',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -99,7 +98,7 @@ class RecipeDataProvider{
    // print("my file"+recipe.image.toString());
     final response = await httpClient.post(
 
-      Uri.http('192.168.1.6:8181', '/recipes/new'),
+      Uri.http(address, '/recipes/new'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -164,7 +163,7 @@ class RecipeDataProvider{
 Future<void> updateRecipe(Recipe recipe) async {
   print("recpe id ${recipe.id}");
     final http.Response response = await httpClient.put(
-      '$_baseUrl/recipes/update/${recipe.id}',
+      '$baseUrl/recipes/update/${recipe.id}',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
 

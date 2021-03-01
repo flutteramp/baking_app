@@ -200,6 +200,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         child: Container(
                             margin: EdgeInsets.only(right: 20, left: 10),
                             child: TextFormField(
+                              obscureText: true,
                               controller: _pass,
                                onSaved: (value) {
                       user.password = value;
@@ -230,6 +231,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         child: Container(
                             margin: EdgeInsets.only(right: 20, left: 10),
                             child: TextFormField(
+                              obscureText: true,
                               controller: _confirmPass,
                               decoration: InputDecoration(
                                 hintText: 'Confirm Password',

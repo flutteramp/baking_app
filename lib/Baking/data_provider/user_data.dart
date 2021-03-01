@@ -3,9 +3,11 @@ import 'package:baking_app/Baking/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../constants.dart';
+
 class UserDataProvider{
 
-final _baseUrl = 'http://192.168.1.6:8181';
+// final _baseUrl = 'http://192.168.1.6:8181';
   final http.Client httpClient;
 
   UserDataProvider({@required this.httpClient}) : assert(httpClient != null);
@@ -13,7 +15,7 @@ final _baseUrl = 'http://192.168.1.6:8181';
   Future<void> createUser(User user) async {
     final response = await httpClient.post(
 
-      Uri.http('192.168.1.6:8181', '/signup'),
+      Uri.http(address, '/signup'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -38,7 +40,7 @@ final _baseUrl = 'http://192.168.1.6:8181';
 
     Future<void> deleteUser(int id) async {
     final response = await httpClient.delete(
-      '$_baseUrl/users/delete/$id',
+      '$baseUrl/users/delete/$id',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -54,7 +56,7 @@ final _baseUrl = 'http://192.168.1.6:8181';
 
 Future<void> updateUser(User user) async {
     final response = await httpClient.put(
-      '$_baseUrl/users/update/${user.id}',
+      '$baseUrl/users/update/${user.id}',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
