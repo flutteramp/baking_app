@@ -1,6 +1,7 @@
 import 'package:baking_app/Baking/data_provider/authentication_data.dart';
 import 'package:baking_app/Baking/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:baking_app/Baking/shared_preferences.dart';
 
 class AuthenticationRepository{
 final AuthenticationDataProvider dataProvider;
@@ -8,7 +9,18 @@ final AuthenticationDataProvider dataProvider;
       : assert(dataProvider != null);
   
 Future<User> getCurrentUser() async {
-   // return await dataProvider.getCurrentUser(id);
+  return await SharedPrefUtils.getStringValuesSF().then((token)async{
+      if (token==null){
+        return null;
+      }
+      else{
+          return await dataProvider.getCurrentUser();
+      }
+  });
+
+  
+    
+   
   }
 
   Future<User> getUser(int id) async {
@@ -16,8 +28,8 @@ Future<User> getCurrentUser() async {
   }
 
 Future<void> signOut() async {
-
-   // return await dataProvider.createComment(comment);
+    await SharedPrefUtils.deleteStringSF();
+  
   }
 
   Future<String> signInWithEmailAndPassword(User user) async {

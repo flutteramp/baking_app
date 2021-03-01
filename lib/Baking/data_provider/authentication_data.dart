@@ -7,13 +7,40 @@ import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../shared_preferences.dart';
+import 'package:baking_app/Baking/shared_preferences.dart';
 
 class AuthenticationDataProvider{
   final _baseUrl = 'http://192.168.1.6:8181';
   final http.Client httpClient;
 
   AuthenticationDataProvider({@required this.httpClient}) : assert(httpClient != null);
+  
+  
+  
+  Future<User> getCurrentUser()async{
+    print(":::::::::::::::::::::::::::::::::::::::::::::::::::::");
 
+   return await SharedPrefUtils.getStringValuesSF().then((token)async{
+    Map<String, dynamic> payload = Jwt.parseJwt(token);
+    print('token is');
+    print(payload['sessionId']);
+    final response = await httpClient.get('$_baseUrl/users/${payload['sessionId']}');
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+    print(response.body);
+      return User.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to retrieve user.');
+    }
+
+
+
+    });
+
+     
+
+
+  }
 
 
   Future<String> signInWithEmailAndPassword(User user) async{
@@ -37,6 +64,7 @@ class AuthenticationDataProvider{
          print(jwt);
         final token = jwt['token'];
         SharedPrefUtils.addStringToSF(token);
+        
         print(token);
         Map<String, dynamic> payload = Jwt.parseJwt(token);
 

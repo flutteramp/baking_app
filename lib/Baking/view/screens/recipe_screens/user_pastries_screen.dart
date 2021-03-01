@@ -33,8 +33,8 @@ class UserPastriesScreen extends StatelessWidget {
           return Text("not working");
         }
         else if(state is RecipeSuccessfull){
-          final recipes=state.userRecipes;
-           return SingleChildScrollView(
+          final recipes=state.userRecipes.reversed;
+           return recipes.isEmpty?Container(color:Colors.grey[300], child: Center(child: Text('You Have No posts'))): SingleChildScrollView(
                   child: Container(
               color: Color.fromRGBO(125, 125, 125, 0.1),
               child: Column(

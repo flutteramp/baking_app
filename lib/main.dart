@@ -25,6 +25,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'Baking/bloc/ingredient_bloc/ingredient_bloc.dart';
 import 'Baking/bloc/recipe_bloc/recipe_event.dart';
+import 'Baking/bloc/authentication_boc/authentication_event.dart';
 import 'package:http/http.dart' as http;
 
 import 'Baking/bloc/user_bloc/user_bloc.dart';
@@ -151,7 +152,7 @@ final StepRepository stepRepository;
       child: MultiBlocProvider(
         providers: [
             BlocProvider(
-              create: (context) => AuthenticationBloc(authenticationRepository: this.authenticationRepository)),
+              create: (context) => AuthenticationBloc(authenticationRepository: this.authenticationRepository)..add(AppLoaded())),
 
           BlocProvider(
               create: (context) =>
@@ -205,6 +206,9 @@ final StepRepository stepRepository;
           home:BlocBuilder<AuthenticationBloc,AuthenticationState>(builder: (_,state){
               if(state is AuthenticationAuthenticated){
                   return TabsNavigation();
+              }
+              else if (state is AuthenticationLoading){
+                return Scaffold(body: Center(child:CircularProgressIndicator()));
               }
               else{
                 print(state);
