@@ -19,11 +19,9 @@ class AuthenticationDataProvider{
   
   
   Future<User> getCurrentUser()async{
-    print(":::::::::::::::::::::::::::::::::::::::::::::::::::::");
+
    return await SharedPrefUtils.getStringValuesSF().then((token)async{
     Map<String, dynamic> payload = Jwt.parseJwt(token);
-    print('token is');
-    print(payload['sessionId']);
     final response = await httpClient.get('$baseUrl/users/${payload['sessionId']}',
     headers: await SharedPrefUtils.getStringValuesSF().then((token){
          print(token);
@@ -63,15 +61,12 @@ class AuthenticationDataProvider{
     );
 
     print(response.statusCode);
-      print("Nooooooooooo");
         final jwt = jsonDecode(response.body);
          print(jwt);
         final token = jwt['token'];
         SharedPrefUtils.addStringToSF(token);
-        
         print(token);
         Map<String, dynamic> payload = Jwt.parseJwt(token);
-
         print(payload);
 
     if (response.statusCode == 201) {

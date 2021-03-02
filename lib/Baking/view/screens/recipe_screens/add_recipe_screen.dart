@@ -62,9 +62,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
   }
 
   void onSave(BuildContext context) {
-    print("again");
+ 
     _form.currentState.save();
-    print("again again");
+
     print(_recipe.title);
     if (widget.args.add) {
       BlocProvider.of<RecipeBloc>(context).add(RecipeCreate(_recipe, _file));
@@ -100,7 +100,6 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
       if (state is AuthenticationAuthenticated) {
-        print("my reciooo");
         print(_recipe);
         _recipe.userID = state.user.id;
         return Scaffold(

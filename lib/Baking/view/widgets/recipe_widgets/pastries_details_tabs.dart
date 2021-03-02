@@ -17,7 +17,6 @@ class PastriesDetailsTabs extends StatefulWidget {
 class _PastriesDetailsTabsState extends State<PastriesDetailsTabs> {
   @override
   Widget build(BuildContext context) {
-    print("recipee");
     print(widget.recipe);
     return SingleChildScrollView(
       child: Column(children: <Widget>[

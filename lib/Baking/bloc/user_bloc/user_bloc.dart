@@ -19,7 +19,7 @@ class UserBloc extends Bloc<UserEvent,UserState>{
   Stream<UserState> mapEventToState(UserEvent event) async*{
 
     if(event is UserCreate){
-       print('fired user create');
+
 
       try {
         await userRepository.createUser(event.user);
@@ -27,7 +27,6 @@ class UserBloc extends Bloc<UserEvent,UserState>{
         yield UserSuccessfull();
       } catch (e) {
         print(e);
-        print("hhhhhhht");
         yield UserFailure();
       }
 
@@ -49,10 +48,8 @@ class UserBloc extends Bloc<UserEvent,UserState>{
         try {
         await userRepository.updateUser(event.user);
         final user = await authenticationRepository.getUser(id);
-       print('fefefefefefefefefefeefe');
         authenticationBloc.add(UserLoggedIn(user: user));
         yield UserSuccessfull(user);
-        print('commne sucesssssss');
       } catch (_) {
         yield UserFailure();
       }

@@ -43,7 +43,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var user = User(username: '', password: '', email: '');
 
   void onSave(BuildContext context) {
-    print("againnnnnnnnnnnnnnnnn");
     print(user.email);
     print(user.password);
     print(user.username);

@@ -22,9 +22,7 @@ List<Recipe> time = [];
         await recipeRepository.createRecipe(event.recipe);
        
        final recipe = await recipeRepository.getRecipes();
-       print("checkkkkkkkkkkkkkkkkkkkkkkk");
         yield RecipeSuccessfull(recipe);
-           print("kjjjjjjjjjjjjjjjjjjjj");
       } catch (e) {
         print(e);
             
@@ -41,7 +39,6 @@ List<Recipe> time = [];
 
       } catch ( error) {
         
-        print("my errorrrrrrrrrrrrrrrrrrrrrrrrrrr" );
         yield RecipeFailure();
       }
     }
@@ -55,8 +52,6 @@ List<Recipe> time = [];
         yield RecipeSuccessfull(recipes,userRecipes);
 
       } catch ( error) {
-        
-        print("my errorrrrrrrrrrrrrrrrrrrrrrrrrrr" );
         yield RecipeFailure();
       }
     }
@@ -89,7 +84,6 @@ List<Recipe> time = [];
         
       } catch ( error) {
         
-        print("my errorrrrrrrrrrrrrrrrrrrrrrrrrrr" );
         yield RecipeFailure();
       }
     }

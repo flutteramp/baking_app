@@ -14,9 +14,9 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
   @override
   Stream<AuthenticationState> mapEventToState(AuthenticationEvent event) async* {
-    print('getting hererererererererere');
+
     if (event is AppLoaded) {
-       print('event is app loaded');
+
       yield* _mapAppLoadedToState(event);
     }
 
@@ -35,10 +35,9 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       final currentUser = await authenticationRepository.getCurrentUser();
 
       if (currentUser != null) {
-        print('Found himmmm');
+
         yield AuthenticationAuthenticated(user: currentUser);
-      } else {
-         print('Nope himmmm');
+
         yield AuthenticationNotAuthenticated();
       }
     } catch (e) {
@@ -47,7 +46,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   }
 
   Stream<AuthenticationState> _mapUserLoggedInToState(UserLoggedIn event) async* {
-    print("Authenticateddddddddddddddddddddddddddddddd");
+
     yield AuthenticationAuthenticated(user: event.user);
   }
 

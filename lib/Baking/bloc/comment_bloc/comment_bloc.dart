@@ -21,7 +21,6 @@ class CommentBloc extends Bloc<CommentEvent,CommentState>{
     }
 
     if(event is CommentCreate){
-       print('fired comment create');
 
       try {
         await commentRepository.createComment(event.comment);
@@ -52,9 +51,9 @@ class CommentBloc extends Bloc<CommentEvent,CommentState>{
         try {
         await commentRepository.updateComment(event.comment);
        final comments = await commentRepository.getComments(rid);
-       print('fefefefefefefefefefeefe');
+
         yield CommentSuccessfull(comments);
-        print('commne sucesssssss');
+
       } catch (_) {
         yield CommentFailure();
       }

@@ -17,7 +17,6 @@ class IngredientsList extends StatelessWidget {
        if (state is IngredientFailure) {
         return Text('Not Working');
       } else if (state is IngredientSuccessfull) {
-        print('commnetsssss commming');
         final ingredients = state.ingredients.toList();
         print("length ${ingredients.length}");
       return ListView.builder(itemBuilder: (contex,i){

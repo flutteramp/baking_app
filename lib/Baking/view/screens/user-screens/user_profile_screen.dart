@@ -45,10 +45,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   var user=User(id:0, username:'',password:'',email:'');
 
  void onSave(BuildContext context ){
-    print("againnnnnnnnnnnnnnnnn");
-    print(user.email);
-    print(user.password);
-    print(user.username);
     formkey.currentState.save();
     BlocProvider.of<UserBloc>(context).add(UserUpdate(User(id:user.id,username: user.username,password:user.password ,email:user.email)));
 

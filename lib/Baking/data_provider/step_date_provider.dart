@@ -26,7 +26,6 @@ class StepDataProvider{
         'Authorization': 'Bearer $token',
       });
     }) );
-    print('getttinggg stepppppppppps');
     if (response.statusCode == 200) {
       final steps = jsonDecode(response.body) as List;
       return steps.map((step) => RecipeStep.fromJson(step)).toList();

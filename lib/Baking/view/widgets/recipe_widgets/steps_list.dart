@@ -19,7 +19,6 @@ class StepsList extends StatelessWidget {
        if (state is StepFailure) {
         return Text('Not Working');
       } else if (state is StepSuccessfull) {
-        print('commnetsssss commming');
         final steps = state.steps.toList();
         print("length ${steps.length}");
       return ListView.builder(itemBuilder: (contex,i){

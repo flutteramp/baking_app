@@ -23,7 +23,6 @@ class _CommentPopupMenuState extends State<CommentPopupMenu> {
         onSelected: (value) {
           switch (value) {
             case 1:
-              print('editt');
               FocusScope.of(context).requestFocus(new FocusNode());
               _displayTextInputDialog(context);
               break;
@@ -31,7 +30,7 @@ class _CommentPopupMenuState extends State<CommentPopupMenu> {
               FocusScope.of(context).requestFocus(new FocusNode());
               BlocProvider.of<CommentBloc>(context)
                   .add(CommentDelete(widget.comment));
-              print('deleteee');
+
               break;
             default:
               break;

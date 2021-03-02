@@ -23,7 +23,6 @@ class IngredientDataProvider{
         'Authorization': 'Bearer $token',
       });
     }) );
-    print('getttinggg commmeeentnnntsssss');
     if (response.statusCode == 200) {
       final ingredients = jsonDecode(response.body) as List;
       return ingredients.map((ingredient) => Ingredient.fromJson(ingredient)).toList();

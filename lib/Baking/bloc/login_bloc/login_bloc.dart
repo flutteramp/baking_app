@@ -29,22 +29,21 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Stream<LoginState> _mapLoginWithEmailToState(LoginInWithEmailButtonPressed event) async* {
     yield LoginLoading();
-    print('Nth very weird just happened');
+
     try {
       final token = await _authenticationRepository.signInWithEmailAndPassword(event.user);
       final user = await _authenticationRepository.getUser(int.parse(token));
         if (user != null) {
-         print('userEmail');
-          print(user.email);
+
         _authenticationBloc.add(UserLoggedIn(user: user));
         yield LoginSuccess();
         yield LoginInitial();
       } else {
-         print('Herererer');
+
         yield LoginFailure(error: 'Something very weird just happened');
       }
     } on Exception {
-         print('______');
+    
       yield LoginFailure(error: "");
     } catch (err) {
       yield LoginFailure(error: err.message ?? 'An unknown error occured');

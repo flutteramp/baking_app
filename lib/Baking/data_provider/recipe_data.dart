@@ -28,7 +28,6 @@ class RecipeDataProvider{
     }) 
     );
     print(response.statusCode);
-    print("heeeeeeeeeeeeeeeeeeeeeeeeeeeee");
     if (response.statusCode == 200) {
       // await getRecipe(1 );
       final recipes = jsonDecode(response.body) as List;
@@ -45,8 +44,6 @@ class RecipeDataProvider{
 
 //  Future<void> getRecipe(int id)async{
 //     final response = await httpClient.get('$_baseUrl/recipe/image/$id');
-//     print('satus coooooooooooooooooooooooooooooooooooooooooooooooooooo');
-//     print(response.statusCode);
 //     if (response.statusCode == 200) {
       
         
@@ -70,7 +67,6 @@ class RecipeDataProvider{
         'Authorization': 'Bearer $token',
       });
     }) );
-    print('satus coooooooooooooooooooooooooooooooooooooooooooooooooooo');
     print(response.statusCode);
     if (response.statusCode == 200) {
        
@@ -140,8 +136,6 @@ Future<Recipe> createRecipe(Recipe recipe) async {
         
       }),
     );
-       print("shhhhhhhh");
-     print("ppppppppppppppppppppppppppppppppppppppppppppppp");
     print(response.statusCode);
         print(response.body);
 
@@ -156,7 +150,6 @@ Future<Recipe> createRecipe(Recipe recipe) async {
   }
   // Future<void> UploadImageRecipe(int recipeId,File file) async {  
   //   Dio dio= Dio();
-  //   print("pleeeeeeeeeeeeeeeeeeeeeeee");
   //   print(recipeId);
   //   print("sure");
   //       print("file "+file.toString());
@@ -168,9 +161,7 @@ Future<Recipe> createRecipe(Recipe recipe) async {
   //   });
   //   dio.options.headers["id"] = recipeId;
     
-  //   var response = await dio.post("http://192.168.1.6:8181/recipes/newImage/${recipeId}", data: formData,queryParameters:{"id":recipeId});
-  //   print("rsponnnnnnnnnnnnnnnnnn");
-    
+  //   var response = await dio.post("http://192.168.1.6:8181/recipes/newImage/${recipeId}", data: formData,queryParameters:{"id":recipeId});  
 
   // }
 
@@ -208,7 +199,6 @@ Future<void> updateRecipe(Recipe recipe) async {
         
       }),
     );
-    print("works");
     print("image "+response.statusCode.toString());
     if (response.statusCode != 200) {
       throw Exception('Failed to update recipe.');
