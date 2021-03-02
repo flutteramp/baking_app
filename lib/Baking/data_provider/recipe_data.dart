@@ -62,7 +62,14 @@ class RecipeDataProvider{
 
 
     Future<List<Recipe>> getUserRecipes(int id)async{
-    final response = await httpClient.get('$baseUrl/user/$id/recipes');
+    final response = await httpClient.get('$baseUrl/user/$id/recipes',
+         headers: await SharedPrefUtils.getStringValuesSF().then((token){
+         print(token);
+    return (<String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
+      });
+    }) );
     print('satus coooooooooooooooooooooooooooooooooooooooooooooooooooo');
     print(response.statusCode);
     if (response.statusCode == 200) {
@@ -81,9 +88,13 @@ class RecipeDataProvider{
       Future<void> deleteRecipe(int id) async {
     final http.Response response = await httpClient.delete(
       '$baseUrl/recipes/delete/$id',
-      headers: <String, String>{
+           headers: await SharedPrefUtils.getStringValuesSF().then((token){
+         print(token);
+    return (<String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-      },
+        'Authorization': 'Bearer $token',
+      });
+    }) 
     );
 
     if (response.statusCode != 204) {
@@ -94,14 +105,18 @@ class RecipeDataProvider{
 
 
   
-  Future<Recipe> createRecipe(Recipe recipe) async {  
+Future<Recipe> createRecipe(Recipe recipe) async {  
    // print("my file"+recipe.image.toString());
     final response = await httpClient.post(
 
       Uri.http(address, '/recipes/new'),
-      headers: <String, String>{
+          headers: await SharedPrefUtils.getStringValuesSF().then((token){
+         print(token);
+    return (<String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-      },
+        'Authorization': 'Bearer $token',
+      });
+    }) ,
        
       body: jsonEncode(<String, dynamic>{
         'title': recipe.title,
@@ -139,7 +154,6 @@ class RecipeDataProvider{
     }
     
   }
-
   // Future<void> UploadImageRecipe(int recipeId,File file) async {  
   //   Dio dio= Dio();
   //   print("pleeeeeeeeeeeeeeeeeeeeeeee");
@@ -160,14 +174,19 @@ class RecipeDataProvider{
 
   // }
 
+  
+
 Future<void> updateRecipe(Recipe recipe) async {
   print("recpe id ${recipe.id}");
     final http.Response response = await httpClient.put(
       '$baseUrl/recipes/update/${recipe.id}',
-      headers: <String, String>{
+          headers: await SharedPrefUtils.getStringValuesSF().then((token){
+         print(token);
+    return (<String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-
-      },
+        'Authorization': 'Bearer $token',
+      });
+    }) ,
       body: jsonEncode(<String, dynamic>{
         'title': recipe.title,
         'servings': recipe.servings,

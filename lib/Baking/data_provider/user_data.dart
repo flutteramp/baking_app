@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants.dart';
+import '../shared_preferences.dart';
 
 class UserDataProvider{
 
@@ -41,9 +42,13 @@ class UserDataProvider{
     Future<void> deleteUser(int id) async {
     final response = await httpClient.delete(
       '$baseUrl/users/delete/$id',
-      headers: <String, String>{
+          headers: await SharedPrefUtils.getStringValuesSF().then((token){
+         print(token);
+    return (<String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-      },
+        'Authorization': 'Bearer $token',
+      });
+    }) ,
     );
 
     if (response.statusCode != 204) {
@@ -57,9 +62,13 @@ class UserDataProvider{
 Future<void> updateUser(User user) async {
     final response = await httpClient.put(
       '$baseUrl/users/update/${user.id}',
-      headers: <String, String>{
+           headers: await SharedPrefUtils.getStringValuesSF().then((token){
+         print(token);
+    return (<String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-      },
+        'Authorization': 'Bearer $token',
+      });
+    }) ,
       body: jsonEncode(<String, dynamic>{
         'id': user.id,
         'fullname': user.username,

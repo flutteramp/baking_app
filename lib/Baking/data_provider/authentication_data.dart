@@ -20,12 +20,18 @@ class AuthenticationDataProvider{
   
   Future<User> getCurrentUser()async{
     print(":::::::::::::::::::::::::::::::::::::::::::::::::::::");
-
    return await SharedPrefUtils.getStringValuesSF().then((token)async{
     Map<String, dynamic> payload = Jwt.parseJwt(token);
     print('token is');
     print(payload['sessionId']);
-    final response = await httpClient.get('$baseUrl/users/${payload['sessionId']}');
+    final response = await httpClient.get('$baseUrl/users/${payload['sessionId']}',
+    headers: await SharedPrefUtils.getStringValuesSF().then((token){
+         print(token);
+    return (<String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
+      });
+    }) );
     print(response.statusCode);
     if (response.statusCode == 200) {
     print(response.body);
@@ -33,8 +39,6 @@ class AuthenticationDataProvider{
     } else {
       throw Exception('Failed to retrieve user.');
     }
-
-
 
     });
 
@@ -45,7 +49,6 @@ class AuthenticationDataProvider{
 
 
   Future<String> signInWithEmailAndPassword(User user) async{
-    print("yesssssssssssssss");
        final response = await httpClient.post(
       Uri.http(address, '/login'),
       headers: <String, String>{
@@ -80,7 +83,14 @@ class AuthenticationDataProvider{
 
 
  Future<User> getUser(int id) async{
-    final response = await httpClient.get('$baseUrl/users/$id');
+    final response = await httpClient.get('$baseUrl/users/$id',
+         headers: await SharedPrefUtils.getStringValuesSF().then((token){
+    return (<String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
+      });
+    }) 
+    );
     if (response.statusCode == 200) {
     
       return User.fromJson(jsonDecode(response.body));

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants.dart';
+import '../shared_preferences.dart';
 
 
 class StepDataProvider{
@@ -17,7 +18,14 @@ class StepDataProvider{
 
   Future<List<RecipeStep>> getSteps(int rid) async{
      print(rid);
-    final response = await httpClient.get('$baseUrl/recipes/$rid/steps');
+    final response = await httpClient.get('$baseUrl/recipes/$rid/steps',
+         headers: await SharedPrefUtils.getStringValuesSF().then((token){
+         print(token);
+    return (<String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
+      });
+    }) );
     print('getttinggg stepppppppppps');
     if (response.statusCode == 200) {
       final steps = jsonDecode(response.body) as List;

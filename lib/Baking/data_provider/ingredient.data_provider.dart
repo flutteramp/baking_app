@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants.dart';
+import '../shared_preferences.dart';
 
 class IngredientDataProvider{
  // final _baseUrl = 'http://192.168.1.6:8181';
@@ -15,7 +16,13 @@ class IngredientDataProvider{
 
   Future<List<Ingredient>> getingredients(int rid) async{
      print(rid);
-    final response = await httpClient.get('$baseUrl/recipes/$rid/ingredients');
+    final response = await httpClient.get('$baseUrl/recipes/$rid/ingredients',
+    headers: await SharedPrefUtils.getStringValuesSF().then((token){
+    return (<String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
+      });
+    }) );
     print('getttinggg commmeeentnnntsssss');
     if (response.statusCode == 200) {
       final ingredients = jsonDecode(response.body) as List;

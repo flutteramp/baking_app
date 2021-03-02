@@ -17,9 +17,6 @@ Future<User> getCurrentUser() async {
           return await dataProvider.getCurrentUser();
       }
   });
-
-  
-    
    
   }
 
