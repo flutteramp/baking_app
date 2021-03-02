@@ -24,6 +24,7 @@ class _CommentPopupMenuState extends State<CommentPopupMenu> {
           switch (value) {
             case 1:
               print('editt');
+              FocusScope.of(context).requestFocus(new FocusNode());
               _displayTextInputDialog(context);
               break;
             case 2:

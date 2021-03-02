@@ -40,9 +40,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LoginSuccess();
         yield LoginInitial();
       } else {
+         print('Herererer');
         yield LoginFailure(error: 'Something very weird just happened');
       }
-    } on Exception catch (e) {
+    } on Exception {
+         print('______');
       yield LoginFailure(error: "");
     } catch (err) {
       yield LoginFailure(error: err.message ?? 'An unknown error occured');

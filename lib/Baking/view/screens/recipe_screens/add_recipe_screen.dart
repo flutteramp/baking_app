@@ -68,21 +68,14 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
     print(_recipe.title);
     if (widget.args.add) {
       BlocProvider.of<RecipeBloc>(context).add(RecipeCreate(_recipe, _file));
-     // _recipe = Recipe(title: '',duration: '',servings: 0,imageurl: '');
+          _form.currentState.reset();
+      // _recipe = Recipe(title: '',duration: '',servings: 0,imageurl: '');
     } else {
-      BlocProvider.of<RecipeBloc>(context).add(RecipeUpdate(_recipe,_recipe.userID));
+      BlocProvider.of<RecipeBloc>(context)
+          .add(RecipeUpdate(_recipe, _recipe.userID));
     }
+
   }
-
-
-
-
- 
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -96,104 +89,124 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
             steps: List<RecipeStep>(),
             imageurl: null)
         : widget.args.recipe;
-    if(!widget.args.add){
-      BlocProvider.of<IngredientBloc>(context).add(IngredientsRetrieve(_recipe.id));
-            BlocProvider.of<StepBloc>(context).add(StepsRetrieve(_recipe.id));
+    if (!widget.args.add) {
+      BlocProvider.of<IngredientBloc>(context)
+          .add(IngredientsRetrieve(_recipe.id));
+      BlocProvider.of<StepBloc>(context).add(StepsRetrieve(_recipe.id));
     }
     final bool add = widget.args.add;
-     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
-          if(state is AuthenticationAuthenticated){
-            print("my reciooo");
-            print(_recipe);
-             _recipe.userID=state.user.id;
-               return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.black, //change your color here
-        ),
-        title: Text(
-          add ? 'Add Recipe' : 'Edit Recipe',
-          style: TextStyle(color: Colors.black87),
-        ),
-        backgroundColor: Color.fromRGBO(0, 0, 0, 0),
-        elevation: 0,
-      ),
-      body: Container(
-        color: Color.fromRGBO(125, 125, 125, 0.1),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _form,
-            child: ListView(children: <Widget>[
-              Row(children: [
-                Text(
-                  "General Information",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(child: Divider()),
-              ]),
-              AddGeneralInfo(add, _recipe, _file),
-              SizedBox(height: 20),
-              widget.args.add
-                  ? AddIngredients(_recipe)
-                  : BlocBuilder<IngredientBloc, IngredientState>(
-                      builder: (_, state) {
-                      if (state is IngredientSuccessfull) {
-                        var ingredients = state.ingredients;
-                        _recipe.ingredients = ingredients;
-                        return AddIngredients(_recipe);
-                      } else if (state is IngredientInProgress)
-                        return CircularProgressIndicator();
-                    }),
-              SizedBox(height: 20),
-            
-               widget.args.add
-                  ? AddDirections(_recipe)
-                  : BlocBuilder<StepBloc, RecipeStepState>(
-                      builder: (_, state) {
-                      if (state is StepSuccessfull) {
-                        var steps = state.steps;
-                       
-
-                        _recipe.steps = steps;
-                        return AddDirections(_recipe);
-                      } else if (state is StepInProgress)
-                        return CircularProgressIndicator();
-                    }),
-              SizedBox(
-                height: 20,
-              ),
-              RaisedButton(
-                onPressed: () {
-                  print(state.user);
-               
-                  onSave(context);
-                },
-                child: Row(children: [
-                  Text("Done"),
-                  BlocBuilder<RecipeBloc, RecipeState>(builder: (_, state) {
-                    if (state is RecipeInProgress) {
-                      return CircularProgressIndicator();
-                    }
-                    return Container();
-                  }),
-                ]),
-              )
-            ]),
+      if (state is AuthenticationAuthenticated) {
+        print("my reciooo");
+        print(_recipe);
+        _recipe.userID = state.user.id;
+        return Scaffold(
+          key: scaffoldKey,
+          appBar: AppBar(
+            iconTheme: IconThemeData(
+              color: Colors.black, //change your color here
+            ),
+            title: Text(
+              add ? 'Add Recipe' : 'Edit Recipe',
+              style: TextStyle(color: Colors.black87),
+            ),
+            backgroundColor: Color.fromRGBO(0, 0, 0, 0),
+            elevation: 0,
           ),
-        ),
-      ),
-    );
+          body: Container(
+            color: Color.fromRGBO(125, 125, 125, 0.1),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: _form,
+                child: ListView(children: <Widget>[
+                  Row(children: [
+                    Text(
+                      "General Information",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(child: Divider()),
+                  ]),
+                  AddGeneralInfo(add, _recipe, _file),
+                  SizedBox(height: 20),
+                  widget.args.add
+                      ? AddIngredients(_recipe)
+                      : BlocBuilder<IngredientBloc, IngredientState>(
+                          builder: (_, state) {
+                          if (state is IngredientSuccessfull) {
+                            var ingredients = state.ingredients;
+                            _recipe.ingredients = ingredients;
+                            return AddIngredients(_recipe);
+                          } else if (state is IngredientInProgress)
+                            return CircularProgressIndicator();
+                        }),
+                  SizedBox(height: 20),
+                  widget.args.add
+                      ? AddDirections(_recipe)
+                      : BlocBuilder<StepBloc, RecipeStepState>(
+                          builder: (_, state) {
+                          if (state is StepSuccessfull) {
+                            var steps = state.steps;
 
-          }
-          else{
-            return Text('Not Auth');
-          }
-     
+                            _recipe.steps = steps;
+                            return AddDirections(_recipe);
+                          } else if (state is StepInProgress)
+                            return CircularProgressIndicator();
+                        }),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  FlatButton(
+                    height: 40,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        side: BorderSide(color: Colors.red)),
+                    onPressed: () {
+                      print(state.user);
+
+                      onSave(context);
+                    },
+                    child: Row(children: [
+                      Text(
+                        'Submit',
+                        style: TextStyle(
+                            color: Color.fromRGBO(247, 102, 94, 1),
+                            fontSize: 15),
+                      ),
+                      BlocBuilder<RecipeBloc, RecipeState>(builder: (_, state) {
+                        if (state is RecipeInProgress) {
+                          return CircularProgressIndicator();
+                        } else if (state is RecipeFailure) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            scaffoldKey.currentState.showSnackBar(SnackBar(
+                              content: Text('Recipe is not added'),
+                            ));
+                          });
+                        } else if (state is RecipeSuccessfull) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            scaffoldKey.currentState.showSnackBar(SnackBar(
+                              content: Text('Recipe is added'),
+                            ));
+                          });
+                        }
+                        return Container();
+                      }),
+                    ]),
+                  )
+                ]),
+              ),
+            ),
+          ),
+        );
+      } else {
+        return Text('Not Auth');
+      }
     });
   }
 }

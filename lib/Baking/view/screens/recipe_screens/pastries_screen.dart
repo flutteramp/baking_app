@@ -31,7 +31,7 @@ class PastriesScreen extends StatelessWidget {
           return Text("not working");
         }
         else if(state is RecipeSuccessfull){
-          final recipes=state.recipes;
+          final recipes=state.recipes.reversed;
         return SingleChildScrollView(
                   child: Container(
               color: Color.fromRGBO(125, 125, 125, 0.1),

@@ -77,6 +77,7 @@ class AuthenticationDataProvider{
     if (response.statusCode == 201) {
       return payload['sessionId'];
     } else {
+      print('throwing exception');
       throw Exception('Failed to retrieve user.');
     }
   }
